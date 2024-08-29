@@ -1,0 +1,33 @@
+BATCH_SIZE:
+  HAPT: 128
+  HHAR: 128
+  Opportunity: 64
+  DSADS: 64
+  SHO: 128
+
+EPOCH:
+  HAPT:  60
+  HHAR:  60
+  Opportunity: 60
+  DSADS: 60
+  SHO:   60
+
+LR: 0.0005
+
+Deep_Conv_LSTM_torch:
+  conv_chnnl: {'HAPT': 128, 'Motion_Sense': 128, 'SHL_2018': 128, 'HHAR': 128, 'MobiAct': 128,
+                  'Opportunity': 128, 'Pamap2': 128, 'RealWorld': 128, 'DSADS': 128, 'SHO': 128}
+  context_chnnl: {'HAPT': 128, 'Motion_Sense': 128, 'SHL_2018': 128, 'HHAR': 128, 'MobiAct': 128,
+                  'Opportunity': 128, 'Pamap2': 128, 'RealWorld': 128, 'DSADS': 128, 'SHO': 128}
+
+DeepSense_torch:
+  conv_chnnl: {'HAPT': 128, 'Motion_Sense': 128, 'SHL_2018': 128, 'HHAR': 128, 'MobiAct': 128,
+               'Opportunity': 128, 'Pamap2': 128, 'RealWorld': 128, 'DSADS': 128, 'SHO': 128}
+  context_chnnl: {'HAPT': 128, 'Motion_Sense': 128, 'SHL_2018': 128, 'HHAR': 128, 'MobiAct': 128,
+                  'Opportunity': 128, 'Pamap2': 128, 'RealWorld': 128, 'DSADS': 128, 'SHO': 128}
+
+Deep_Conv_Transformer_torch:
+  conv_chnnl: {'HAPT': 128, 'Motion_Sense': 128, 'SHL_2018': 128, 'HHAR': 128, 'MobiAct': 128,
+               'Opportunity': 128, 'Pamap2': 128, 'RealWorld': 128, 'DSADS': 128, 'SHO': 128}
+  context_chnnl: {'HAPT': 128, 'Motion_Sense': 128, 'SHL_2018': 128, 'HHAR': 128, 'MobiAct': 128,
+                  'Opportunity': 128, 'Pamap2': 128, 'RealWorld': 128, 'DSADS': 128, 'SHO': 128}
