@@ -5,7 +5,7 @@ This is the pytorch implementation of our paper 'Differentiable Prior-driven Dat
 
 ## Algorithm Introduction:
 
-This paper proposes a differentiable prior-driven data augmentation framework for sensor-based human activity recognition. Extensive experimental results with three different classifiers on five public datasets demonstrate the effectiveness of the proposed framework. The contributions of this work are summarized as follows:
+In this work, a differentiable prior-driven data augmentation framework for sensor-based human activity recognition is proposed. Extensive experimental results with three different classifiers on five public datasets demonstrate the effectiveness of the proposed framework. The contributions of this work are summarized as follows:
 
 - We propose a **D**ifferentiable P**ri**or-dri**ve**n **Da**ta Augmen**ta**tion (DriveData) framework for sensor-based HAR, which is composed of a handcrafted operation module and a generative module.
 - We design a handcrafted operation module, including the candidate operation pool, the reparameterization trick, and the gradient estimator, to adaptively select and optimize the augmentation operations.
@@ -37,7 +37,7 @@ Run the 'src/main.py'. Select datasets, classifiers or augmentation mode in 'src
 Or:
 
 ```
-python main.py --PATTERN TRAIN --DATASETS (choose datasets, e.g. HAPT, Opportunity) --CLASSIFIERS (choose classifers, e.g. Deep_Conv_LSTM_torch, DeepSense_torch, Deep_Conv_Transformer_torch)
+python main.py --PATTERN TRAIN --DATASETS (choose datasets, e.g. HAPT, Opportunity) --CLASSIFIERS (choose classifers, e.g. Deep_Conv_LSTM_torch, DeepSense_torch, Deep_Conv_Transformer_torch) --AUGMENT_MTHODS_LIST (choose angmentation methods, e.g. ['DriveData'], ['Mixup'])
 ```
 
 Note that, the hyperparameters of classifiers on different datasets are put into the 'src/utils/hyperparams.yaml' file.
@@ -58,7 +58,7 @@ python main.py --PATTERN TEST --DATASETS (choose datasets, e.g. HAPT, Opportunit
 
 **Demo for testing:**
 
-Since we have uploaded the 'TSF_torch' models trained on 'HAPT' and 'Opportunity' datasets, you can directly run testing by:
+Since we have uploaded the 'Deep_Conv_Transformer_torch' models trained on 'HAPT' dataset, you can directly run testing by:
 
 ```
 python main.py --PATTERN TEST --DATASETS HAPT --CLASSIFIERS Deep_Conv_Transformer_torch
