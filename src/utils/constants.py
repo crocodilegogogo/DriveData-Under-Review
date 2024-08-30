@@ -16,7 +16,6 @@ def parse_args():
       parser.add_argument('--CLASSIFIERS', nargs='+', default=['Deep_Conv_Transformer_torch'],
       # ['Deep_Conv_LSTM_torch','DeepSense_torch','Deep_Conv_Transformer_torch']
                           help='CLASSIFIERS: could put multiple classifiers into the list')
-      # ['DimmagScale','TimeWarp','CutOut','Mixup']
       # parser.add_argument('--AUGMENT_METHODS_LIST', nargs='+', default=[['MagNoise'],['DimmagScale'],['MagWarp'],['TimeWarp'],
       #                                                                   ['TimeNoise'],['RandomZoom'],['TimeStepZero'],['TimeShift'],
       #                                                                   ['Scaling'],['CutOut'],['RandomCrop'],['Permutation'],
@@ -25,8 +24,9 @@ def parse_args():
       # parser.add_argument('--AUGMENT_METHODS_LIST', nargs='+', default=[['MagNoise'],['DimmagScale']],
       #                     help='CLASSIFIERS: could combine multiple augmentation methods into the list')
       parser.add_argument('--AUGMENT_METHODS_LIST', nargs='+', default=[['DriveData']],
-      # parser.add_argument('--AUGMENT_METHODS_LIST', nargs='+', default=[['Magscale'],['Magwarp'],['Ampperturb'],['Cutout'],['Timewarp'],['Timenoise'],['Phaseperturb'],['Timecrop']],
-      # parser.add_argument('--AUGMENT_METHODS_LIST', nargs='+', default=[['DimmagScale']],
+      # ['DriveData'],['MagNoise'],['DimmagScale'],['MagWarp'],['TimeWarp'],['TimeNoise'],['RandomZoom'],['TimeStepZero'],['TimeShift'],
+      # ['Scaling'],['CutOut'],['RandomCrop'],['Permutation'],['Resample'],['GenerateHigh'],['GenerateLow'],['AmpNoise'],['PhaseShift'],
+      # ['AmpPhasePert'],['AmpPhasePertFully'],['RandRotate'],['Mixup'],['Cutmix'],['Cutmixup']
                           help='CLASSIFIERS: could combine multiple augmentation methods into the list')
       parser.add_argument('--test_split', type=int, default=3,
                           help='The testing dataset is seperated into test_split pieces in the inference process.')
