@@ -903,9 +903,9 @@ def save_classifiers_comparison(MODELS_COMP_LOG_DIR, CLASSIFIERS, classifier_nam
     
     for j in range(len(AUGMENT_METHODS_LIST)):
         if j == 0:
-            CLASSIFIERS_names = classifier_name+'||'+'+'.join(AUGMENT_METHODS_LIST[j])+'||'
+            CLASSIFIERS_names = classifier_name+'+'+'+'.join(AUGMENT_METHODS_LIST[j])+'+'
         else:
-            CLASSIFIERS_names = CLASSIFIERS_names+'+'.join(AUGMENT_METHODS_LIST[j])+'||'
+            CLASSIFIERS_names = CLASSIFIERS_names+'+'.join(AUGMENT_METHODS_LIST[j])+'+'
     
     classifiers_comparison_log_dir = os.path.join(MODELS_COMP_LOG_DIR, CLASSIFIERS_names + '-comparison' + '.csv')
     
