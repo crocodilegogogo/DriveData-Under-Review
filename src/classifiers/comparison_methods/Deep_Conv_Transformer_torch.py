@@ -305,7 +305,7 @@ def train_op(network, aug_methods, EPOCH, BATCH_SIZE, LR, POS_NUM,
         drop_last_flag = False
 
     if aug_methods[0] != 'DriveData':
-        if aug_methods is not None:
+        if aug_methods[0] is not 'None':
             torch_dataset_train = DataAugment(train_x, train_y, aug_methods, POS_NUM) ##!
         else:
             torch_dataset_train = Data.TensorDataset(torch.FloatTensor(train_x), torch.tensor(train_y).long())
@@ -392,9 +392,11 @@ def train_op(network, aug_methods, EPOCH, BATCH_SIZE, LR, POS_NUM,
                     elif 'Cutmixup' in aug_methods:
                         output_bc, loss = cutmixup(batch_x, batch_y, loss_function, network, 5, True)
                     else:
-                        output, _ = network(batch_x)
+                        output    = network(batch_x)
                         # cal the sum of pre loss per batch 
                         loss      = loss_function(output[0], batch_y)
+                    
+                    kl_loss = 0
                     
                     optimizer.zero_grad()
                     loss.backward()
@@ -432,14 +434,13 @@ def train_op(network, aug_methods, EPOCH, BATCH_SIZE, LR, POS_NUM,
                     architect.step(x, y, x_search, y_search, optimizer.param_groups[0]['lr'], loss_function, optimizer, unrolled=args.unrolled)
                     
                     mixed_x, y_a, y_b, lam = mixup_data(x, y, 3, use_cuda=True)
-                    
-                    mixed_x, y_a, y_b  = map(Variable, (mixed_x, y_a, y_b))
+                    mixed_x, y_a, y_b = map(Variable, (mixed_x, y_a, y_b))
                     output_bc, kl_loss = network(mixed_x, epoch=epoch)
                     c_loss             = mixup_criterion(loss_function, output_bc, y_a, y_b, lam)
                     if kl_loss >= 2 * c_loss:
-                        loss               = c_loss
+                        loss               = c_loss + kl_loss * (c_loss.detach()/(kl_loss.detach()+1))
                     else:
-                        loss               = c_loss
+                        loss               = c_loss + kl_loss
                     
                     optimizer.zero_grad()
                     loss.backward()

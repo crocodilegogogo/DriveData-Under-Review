@@ -13,6 +13,7 @@ import time
 from utils.utils import *
 from utils.augmentation_operations import *
 from utils.diff_framework          import *
+from utils.distributions.relaxed_bernoulli import RelaxedBernoulli
 import os
 
 from sklearn.metrics import (
@@ -139,7 +140,8 @@ class Deep_Conv_LSTM(nn.Module):
     
     def sample(self):
         self.probabilities_mid = self.probabilities.clone().clamp(0.0, 1.0)
-        probabilities_dist        = torch.distributions.RelaxedBernoulli(self.temperature, self.probabilities_mid) # RelaxedBernoulli sampling
+        # probabilities_dist        = torch.distributions.RelaxedBernoulli(self.temperature, self.probabilities_mid) # RelaxedBernoulli sampling
+        probabilities_dist        = RelaxedBernoulli(self.temperature, self.probabilities_mid) # RelaxedBernoulli sampling
         sample_probabilities      = probabilities_dist.rsample()
         sample_probabilities      = sample_probabilities.clamp(0.0, 1.0)
         self.sample_probabilities_index = sample_probabilities >= 0.5
@@ -212,7 +214,7 @@ def train_op(network, aug_methods, EPOCH, BATCH_SIZE, LR, POS_NUM,
         drop_last_flag = False
 
     if aug_methods[0] != 'DriveData':
-        if aug_methods is not None:
+        if aug_methods[0] is not 'None':
             torch_dataset_train = DataAugment(train_x, train_y, aug_methods, POS_NUM) ##!
         else:
             torch_dataset_train = Data.TensorDataset(torch.FloatTensor(train_x), torch.tensor(train_y).long())
@@ -299,9 +301,11 @@ def train_op(network, aug_methods, EPOCH, BATCH_SIZE, LR, POS_NUM,
                     elif 'Cutmixup' in aug_methods:
                         output_bc, loss = cutmixup(batch_x, batch_y, loss_function, network, 5, True)
                     else:
-                        output, _ = network(batch_x)
+                        output    = network(batch_x)
                         # cal the sum of pre loss per batch 
                         loss      = loss_function(output[0], batch_y)
+                    
+                    kl_loss = 0
                     
                     optimizer.zero_grad()
                     loss.backward()

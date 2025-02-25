@@ -123,7 +123,10 @@ class DeepSense(nn.Module):
         elif self.datasetname in ['SHO']:
             mul = 16
         elif self.datasetname in ['Opportunity']:
-            mul = 8
+            if self.aug_methods[0] == 'DriveData':
+                mul = 8
+            else:
+                mul = 15
         elif self.datasetname in ['DSADS']:
             mul = 7
         
@@ -353,7 +356,7 @@ def train_op(network, aug_methods, EPOCH, BATCH_SIZE, LR, POS_NUM,
         drop_last_flag = False
 
     if aug_methods[0] != 'DriveData':
-        if aug_methods is not None:
+        if aug_methods[0] is not 'None':
             torch_dataset_train = DataAugment(train_x, train_y, aug_methods, POS_NUM) ##!
         else:
             torch_dataset_train = Data.TensorDataset(torch.FloatTensor(train_x), torch.tensor(train_y).long())
@@ -440,9 +443,11 @@ def train_op(network, aug_methods, EPOCH, BATCH_SIZE, LR, POS_NUM,
                     elif 'Cutmixup' in aug_methods:
                         output_bc, loss = cutmixup(batch_x, batch_y, loss_function, network, 5, True)
                     else:
-                        output, _ = network(batch_x)
+                        output    = network(batch_x)
                         # cal the sum of pre loss per batch 
                         loss      = loss_function(output[0], batch_y)
+                    
+                    kl_loss = 0
                     
                     optimizer.zero_grad()
                     loss.backward()
